@@ -1,3 +1,6 @@
 [submodule "lem"]
 	path = lem
 	url = https://github.com/lem-project/lem
+[submodule "packages/lem-pareto"]
+	path = packages/lem-pareto
+	url = https://github.com/40ants/lem-pareto

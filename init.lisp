@@ -17,7 +17,7 @@
     (unless (equal (uiop:run-program "cd ~/.lem && git fetch && git diff --name-only master origin/master" :force-shell t :output :string)
                    "")
       (if (lem:prompt-for-y-or-n-p "Merge local config with remote?")
-          (uiop:run-program "cd ~/.lem && git pull")))
+          (uiop:run-program "cd ~/.lem && git pull"))))
 
 
 ;; Load User Configuration

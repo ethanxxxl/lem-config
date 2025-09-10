@@ -13,10 +13,12 @@
 
 ;; Ensure configuration is up to date with git server
 
-(unless (equal (uiop:run-program "cd ~/.lem && git fetch" :force-shell t :output :string)
-               "")
-  (if (prompt-for-y-or-n-p "Merge local config with remote?")
-      (uiop:run-program "cd ~/.lem && git pull")))
+(define-command update-config () ()
+    (unless (equal (uiop:run-program "cd ~/.lem && git fetch && git diff --name-only master origin/master" :force-shell t :output :string)
+                   "")
+      (if (lem:prompt-for-y-or-n-p "Merge local config with remote?")
+          (uiop:run-program "cd ~/.lem && git pull")))
+
 
 ;; Load User Configuration
 (load #P"~/.lem/init/all.lisp")

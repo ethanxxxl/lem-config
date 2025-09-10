@@ -1,42 +1,22 @@
 ;;; AUTHOR: Ethan Smith
-;;; DATE: 8 September 2025
-;;; DESCRIPTION: Init file for my lem configuration
+;;; DATE: 9 September 2025
+;;; DESCRIPTION: Configuration Loader For Lem
+;;; This is the first file that is loaded by Lem.  This file is responsible for
+;;; pulling any changes to the configuration from the git repository and then
+;;; loading the files in the init directory.
+;;;
+;;; This is done so that you don't have to manually run `git pull' every time
+;;; the config needs updated.  However, if this file is updated, `git pull' 
+;;; may need to be run so that files are loaded correctly.
 
 (in-package :lem-user)
 
-; (push #P"~/.lem/packages/lem-pareto/" asdf:*central-registry*)
-; (asdf:load-system :lem-pareto)
-; ; Enable Paredit and Pareto along with Lisp mode
-; (add-hook *find-file-hook*
-;           (lambda (buffer)
-;             (when (eq (buffer-major-mode buffer)
-;                       'lem-lisp-mode:lisp-mode)
-;               (change-buffer-mode buffer 'lem-paredit-mode:paredit-mode t)
-;               (change-buffer-mode buffer 'lem-pareto-mode:pareto-mode ))))
+;; Ensure configuration is up to date with git server
 
-(load-theme "classic-dark")
+(unless (equal (uiop:run-program "cd ~/.lem && git fetch" :force-shell t :output :string)
+               "")
+  (if (prompt-for-y-or-n-p "Merge local config with remote?")
+      (uiop:run-program "cd ~/.lem && git pull")))
 
-(add-hook *find-file-hook*
-          (lambda (buffer)
-            (when (eq (buffer-major-mode buffer)
-                      'lem-lisp-mode:lisp-mode)
-              (change-buffer-mode buffer 'lem-paredit-mode:paredit-mode t))))
-
-(undefine-key lem-paredit-mode:*paredit-mode-keymap* "C-h")
-
-(define-keys *global-keymap*
-  ("C-h f" 'lem-lisp-mode:lisp-describe-symbol)
-  ("C-h k" 'describe-key)
-  ("C-h m" 'describe-mode)
-  ("C-h I" 'lem-lisp-mode:lisp-inspect)
-  ("C-h b" 'describe-bindings))
-
-(define-keys lem-paredit-mode:*paredit-mode-keymap*
-  ("C-<" 'lem-paredit-mode:paredit-barf)
-  ("C->" 'lem-paredit-mode:paredit-slurp))
-
-(define-keys *global-keymap*
-  ("C-/" 'undo)
-  ("C-?" 'redo))
-
-(lem/line-numbers:toggle-line-numbers)
+;; Load User Configuration
+(load #P"~/.lem/init/all.lisp")

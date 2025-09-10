@@ -1,0 +1,3 @@
+# Lem Editor Configuration
+
+this is my config for the Lem text editor...

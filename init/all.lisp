@@ -32,8 +32,9 @@
 
 (define-command apropos-symbol (symbol package) ((:string "Symbol Name: ") (:string "Package: "))
   (lem:show-message
-   (format nil "~{~(~S~)~%~}" (apropos-list (string-upcase symbol)
-                                            (string-upcase package)))))
+   (format nil "~{~(~S~)~%~}"
+           (apropos-list (string-upcase symbol)
+                         (unless (equal "" package) (string-upcase package))))))
 
 (define-command open-config () ()
   (find-file #P"~/.lem/init.lisp"))

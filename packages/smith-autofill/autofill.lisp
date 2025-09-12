@@ -35,7 +35,6 @@ lines"
 
                        (setf len (length s))
                        (when (<= 2 len)
-                         (lem:message s)
                          (setf punct (elt s (- len 1))
                                last-letter (elt s (- len 2)))
                        
@@ -90,6 +89,8 @@ boundaries.  TEXT should not have newline characters."
 
 (defvar *fill-function* 'autofill-paragraph)
 (lem:define-command autofill () ()
+  "FIXME WIP: Generic autofill command.  Autofill method is chosen based on the
+current mode."
   (funcall *fill-function* (lem:current-point)))
 
 (lem:define-key lem:*global-keymap* "M-q" 'autofill)

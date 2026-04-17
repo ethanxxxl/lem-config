@@ -69,3 +69,10 @@
 
 ;; Graphics stuff
 (lem/line-numbers:toggle-line-numbers)
+
+;; TEMP C LSP
+(lem-lsp-mode:define-language-spec (c-spec lem-c-mode:c-mode)
+  :language-id "C"
+  :root-uri-patterns '("compile-commands.json")
+  :command '("clangd")
+  :connection-mode :stdio)

@@ -21,7 +21,9 @@
 ;               (change-buffer-mode buffer 'lem-paredit-mode:paredit-mode t)
 ;               (change-buffer-mode buffer 'lem-pareto-mode:pareto-mode ))))
 
-(load-theme "classic-dark")
+;(load-theme "classic-dark")
+;(load-theme "monokai")
+(load-theme "material-darker")
 
 ;; enable paredit minor-mode in lisp mode
 (add-hook *find-file-hook*
